@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Index</title>
+</head>
+<body>
+	<h2>登入頁面</h2>
+	<form method="POST" action="/demo/login">
+		<table style="margin:auto">
+			<tr>
+				<td><label>Account</label></td>
+				<td><input type="text" name="account"  th:text="${account}"></td>
+			</tr>
+			<tr>
+				<td><label>Password</label></td>
+				<td><input type="text" name="password" th:text="${password}"></td>
+			</tr>
+			<tr>				
+				<td><input type="submit" value="Enter"></td>
+			</tr>
+		</table>
+	</form>
+	
+</body>
+</html>
