@@ -8,8 +8,9 @@ import jakarta.persistence.Id;
 @Entity
 public class MemberLogin {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer memberId;
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//會需要一筆一筆插入
+	private Integer memberId;//使用string，沒有Generator
 	private String account;
 	private String password;
 	

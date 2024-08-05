@@ -10,22 +10,22 @@
 		<table style="margin:auto">
 			<tr>
 				<td><label>Account</label></td>
-				<td><input type="text" name="account"  th:text="${account}"></td>
+				<td><input type="text" name="account"  th:value="${account}"></td>
 			</tr>
 			<tr>
 				<td><label>Password</label></td>
-				<td><input type="text" name="password" th:text="${password}"></td>
+				<td><input type="text" name="password" th:value="${password}"></td>
 			</tr>
 			<tr>				
-				<td><input type="submit" value="Enter"></td>
+				<td><input type="submit" value="Sign in"></td>
 			</tr>
 		</table>
 	</form>
 	
-	<th:block th:unless="${errors.isEmpty()}" >
+	<th:block th:unless="${error==null}" >
 		<table  style="margin:auto;color:red"><tr><td>
 			<ul>		
-				<li><span th:text="${errors}"></span> </li>		
+				<li><span th:text="${error}"></span> </li>		
 			</ul>
 			</td></tr></table>
 	</th:block>
