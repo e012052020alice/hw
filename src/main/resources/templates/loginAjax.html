@@ -16,11 +16,11 @@
 	<h2>AJAX登入頁面</h2>
 	<form class="px-4 py-3">
 		<div class="form-floating mb-3">
-  			<input type="text" class="form-control" id="uaccount" name="account" th:value="${account}" placeholder="aaa">
+  			<input type="text" class="form-control" id="uaccount" name="account" th:value="${account}" placeholder="aaa" required>
   			<label for="exampleDropdownFormAccount">Account</label>
 		</div>
 		<div class="form-floating">
-  			<input type="password" class="form-control" id="pwd" name="password" th:value="${password}" placeholder="Password">
+  			<input type="password" class="form-control" id="pwd" name="password" th:value="${password}" placeholder="Password" required>
   			<label for="exampleDropdownFormPassword1">Password</label>
 		</div>
 		<div class="form-check">
@@ -31,6 +31,8 @@
     	</div>	 
     	<input type="button" value="Sign in" id="btn" class="btn btn-primary">
 	</form>
+
+	<span id="errorMsg" style='color:red;'></span>
 </main>
 	
 </body>

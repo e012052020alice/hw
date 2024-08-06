@@ -27,12 +27,15 @@ public class LoginService {
 		}		
 		return null;
 	}
-	public String ErrorPassword(String userAccount) {
+	public String ErrorMessage(String userAccount) {
 		Optional<MemberLogin> result=memberLoginRepository.findByAccount(userAccount);		
 		if(result.isPresent()) {
 			return "密碼錯誤";
-		}		
-		return null;
+		}
+		else {
+			return "無此帳號";
+		}
+		
 	}
 	
 }

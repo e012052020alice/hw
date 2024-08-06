@@ -19,7 +19,8 @@ public class LoginFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		if (request.getSession(false)!=null) {
+		System.out.println("filter");
+		if (request.getSession(false)!=null) {			
 			Boolean isVerify=(Boolean)session.getAttribute("isverify");
 			if(isVerify!=null && isVerify) {
 				filterChain.doFilter(request, response);
@@ -28,6 +29,7 @@ public class LoginFilter extends OncePerRequestFilter {
 		} 
 		else {
 			String requestUrl=request.getRequestURI();
+			System.out.println("not yet");
 			if("/demo/welcomeAjax".equals(requestUrl)) {
 				response.sendRedirect("/demo/AjaxPage");
 			}

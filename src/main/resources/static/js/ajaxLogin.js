@@ -1,6 +1,25 @@
+function EnsureEmpty(){
+	if($("#uaccount").val()===""){
+		
+		$("#errorMsg").text("請輸入帳號");
+		console.log("帳號");
+		return true;					
+		}
+	else if($("#pwd").val()===""){
+		$("#errorMsg").text("請輸入密碼");
+		console.log("密碼");
+		return true;
+		}
+		else{
+			return false;
+		}
+}
 $(function(){
 		var btn=$("#btn");
 		btn.click(function(){
+			if(EnsureEmpty()){
+				return false;
+			}
 			$.ajax({
 				url:'/demo/loginAjax',
 				type:'post',
@@ -16,9 +35,8 @@ $(function(){
 						window.location.href="/demo/welcome"
 					}
 					else{
-						$("#btn").nextAll("span").remove();
-						var msg=$("#btn");
-						msg.after("<br><br><span style='color:red;'>"+data.error+"</span>");
+						$("#errorMsg").text(data.error);
+						
 					}
 				},
 				error:function(xhr, status, error){

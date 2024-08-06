@@ -33,10 +33,10 @@ public class LoginController {
 			model.addAttribute("command", memberLogin);
 			return "welcome";
 		}
-		error=user.ErrorPassword(ml.getAccount());
-		if(error==null){
-			error = "帳號密碼出錯";
-		}	
+		error=user.ErrorMessage(ml.getAccount());
+		System.out.println(error);
+		request.setAttribute("account", ml.getAccount());
+//		request.setAttribute("password", ml.getPassword());
 		request.setAttribute("error", error);	
 		return "login";		
 	}
@@ -78,10 +78,11 @@ public class LoginController {
 			response.put("code", 100);
 			response.put("message", "success");
 		}else {
-			error=user.ErrorPassword(ml.getAccount());
-			if(error==null){
-				error = "帳號密碼出錯";
-			}
+			error=user.ErrorMessage(ml.getAccount());
+			System.out.println(error);
+//			if(error==null){
+//				error = "帳號密碼出錯";
+//			}
 			response.put("code",200);
 			response.put("error", error);
 		}		
