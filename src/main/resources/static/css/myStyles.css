@@ -1,15 +1,9 @@
 @charset "UTF-8";
-form{
-	display: block;
-    margin-top: 0em;
-    unicode-bidi: isolate;
-}
-body {
+#container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f7f7f7;
 }
 .form-signin {
      width: 100%;

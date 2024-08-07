@@ -30,7 +30,7 @@ public class LoginFilter extends OncePerRequestFilter {
 		else {
 			String requestUrl=request.getRequestURI();
 			System.out.println("not yet");
-			if("/demo/welcomeAjax".equals(requestUrl)) {
+			if("/demo/welcomeAjax".equals(requestUrl)) {				
 				response.sendRedirect("/demo/AjaxPage");
 			}
 			else {

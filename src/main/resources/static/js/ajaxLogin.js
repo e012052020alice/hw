@@ -1,13 +1,12 @@
 function EnsureEmpty(){
-	if($("#uaccount").val()===""){
-		
-		$("#errorMsg").text("請輸入帳號");
-		console.log("帳號");
+	$("#accountErrorMsg").text("");
+	$("#pwdErrorMsg").text("");
+	if($("#uaccount").val()===""){		
+		$("#accountErrorMsg").text("請輸入帳號");
 		return true;					
 		}
 	else if($("#pwd").val()===""){
-		$("#errorMsg").text("請輸入密碼");
-		console.log("密碼");
+		$("#pwdErrorMsg").text("請輸入密碼");
 		return true;
 		}
 		else{
