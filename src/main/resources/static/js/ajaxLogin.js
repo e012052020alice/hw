@@ -28,13 +28,11 @@ $(function(){
 				},
 				dataType:'json',
 				success:function(data){
-					console.log(data.error);
-					console.log(data.code);
 					if(data.code=="100"){
 						window.location.href="/demo/welcome"
 					}
 					else{
-						$("#errorMsg").text(data.error);
+						$("#pwdErrorMsg").text(data.error);
 						
 					}
 				},
