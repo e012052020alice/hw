@@ -28,6 +28,7 @@ $(function(){
 				},
 				dataType:'json',
 				success:function(data){
+					console.log(data);
 					if(data.code=="100"){
 						window.location.href="/demo/welcome"
 					}

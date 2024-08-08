@@ -1,41 +1,49 @@
 package com.example.demo.service;
 
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.model.MemberLogin;
-import com.example.demo.model.MemberLoginRepository;
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class LoginService {
-	
+
 	@Autowired
-	private MemberLoginRepository memberLoginRepository;
-	@Resource
-	private HttpSession session;
+	private VerifyService user;
+//	@Resource
+//	private HttpServletRequest request;
 	
-	public MemberLogin VerificationUser(String userAccount,String userPassword) {
-		Optional<MemberLogin> result=memberLoginRepository.findByAccountAndPassword(userAccount, userPassword);		
-		if(result.isPresent()) {
-			MemberLogin memberLogin;
-			memberLogin=result.get();
-			session.setAttribute("memberLogin", memberLogin);
-//			session.setAttribute("isverify", true);
-			return memberLogin;
+	public String login(String account,String password, HttpServletRequest request) {
+		MemberLogin memberLogin=user.verificationUser(account, password);		
+		String error=null;
+		if(memberLogin!=null) {
+//			model.addAttribute("command", memberLogin);
+			request.getSession().setAttribute("Data", memberLogin);			
+			return "welcome";
+		}
+		error=user.errorMessage(account);
+		request.setAttribute("account", account);
+		request.setAttribute("error", error);	
+		return "login";		
+	}
+	
+	@ResponseBody
+	public Map<String, Object> loginAjax(String account,String password,HttpServletRequest request ) {
+		Map<String, Object> response=new HashMap<>();		
+		MemberLogin memberLogin=user.verificationUser(account, password);
+		String error=null;
+		if(memberLogin!=null) {
+			request.getSession().setAttribute("Data", memberLogin);
+			response.put("code", 100);
+		}else {
+			error=user.errorMessage(account);
+			System.out.println(error);
+			response.put("code",200);
+			response.put("error", error);
 		}		
-		return null;
-	}
-	public String ErrorMessage(String userAccount) {
-		Optional<MemberLogin> result=memberLoginRepository.findByAccount(userAccount);		
-		if(result.isPresent()) {
-			return "密碼錯誤";
-		}
-		else {
-			return "無此帳號";
-		}
-		
-	}
-	
+		return response;
+	}	
 }

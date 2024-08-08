@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import java.util.HashMap;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,35 +8,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.model.MemberLogin;
-import com.example.demo.service.LoginService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-
-	@Autowired
-	private LoginService user;
-	@Resource
-	private HttpServletRequest request;
-	@Resource
-	private HttpSession session;
+//	@Resource
+//	private HttpServletRequest request;
 
 	@PostMapping("/login")
-	public String login(@ModelAttribute MemberLogin ml, Model model) {
-		MemberLogin memberLogin=user.VerificationUser(ml.getAccount(), ml.getPassword());		
-		String error=null;
-		if(memberLogin!=null) {
-			model.addAttribute("command", memberLogin);
-			return "welcome";
-		}
-		error=user.ErrorMessage(ml.getAccount());
-
-		request.setAttribute("account", ml.getAccount());
-//		request.setAttribute("password", ml.getPassword());
-		request.setAttribute("error", error);	
-		return "login";		
+	public String login(@ModelAttribute MemberLogin ml, Model model, HttpServletRequest request) {
+		model.addAttribute("command", request.getSession().getAttribute("Data"));
+		return (String) request.getAttribute("accountData");
 	}
 
 	@GetMapping("/loginPage")
@@ -47,8 +29,8 @@ public class LoginController {
 	}
 	
 	@GetMapping("/welcome")
-	public String welcome(Model model) {	
-		model.addAttribute("command",session.getAttribute("memberLogin"));		
+	public String welcome(Model model, HttpServletRequest request) {	
+		model.addAttribute("command",request.getSession().getAttribute("memberLogin"));		
 		return "welcome";
 	}
 	
@@ -57,7 +39,7 @@ public class LoginController {
 		return "memberArea";				
 	}
 	@GetMapping("/signOut")
-	public String signOut() {
+	public String signOut(HttpSession session) {
 //		session.setAttribute("isverify", false);
 		session.invalidate();
 		return "index";
@@ -70,27 +52,12 @@ public class LoginController {
 	
 	@PostMapping("/loginAjax")
 	@ResponseBody
-	public Map<String, Object> loginAjax(@ModelAttribute MemberLogin ml,Model model ) {
-		Map<String, Object> response=new HashMap<>();		
-		MemberLogin memberLogin=user.VerificationUser(ml.getAccount(), ml.getPassword());
-		String error=null;
-		if(memberLogin!=null) {
-			model.addAttribute("command",memberLogin);
-			response.put("code", 100);
-			response.put("message", "success");
-		}else {
-			error=user.ErrorMessage(ml.getAccount());
-			System.out.println(error);
-//			if(error==null){
-//				error = "帳號密碼出錯";
-//			}
-			response.put("code",200);
-			response.put("error", error);
-		}		
-		return response;
+	public Map<String, Object> loginAjax(@ModelAttribute MemberLogin ml,Model model,HttpServletRequest request ) {
+		model.addAttribute("command", request.getSession().getAttribute("Data"));
+		return (Map<String, Object>) request.getAttribute("accountData");
 	}
 	@GetMapping("/welcomeAjax")
-	public String welcomeAjax(Model model) {	
+	public String welcomeAjax(Model model,HttpSession session) {	
 		model.addAttribute("command",session.getAttribute("memberLogin"));
 		return "welcomeAjax";
 	}
