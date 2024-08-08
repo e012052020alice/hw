@@ -22,7 +22,7 @@ public class LoginService {
 			MemberLogin memberLogin;
 			memberLogin=result.get();
 			session.setAttribute("memberLogin", memberLogin);
-			session.setAttribute("isverify", true);
+//			session.setAttribute("isverify", true);
 			return memberLogin;
 		}		
 		return null;

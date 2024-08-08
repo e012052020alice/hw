@@ -26,7 +26,7 @@ public class LoginController {
 	private HttpSession session;
 
 	@PostMapping("/login")
-	public String Login(@ModelAttribute MemberLogin ml, Model model) {
+	public String login(@ModelAttribute MemberLogin ml, Model model) {
 		MemberLogin memberLogin=user.VerificationUser(ml.getAccount(), ml.getPassword());		
 		String error=null;
 		if(memberLogin!=null) {
@@ -34,7 +34,7 @@ public class LoginController {
 			return "welcome";
 		}
 		error=user.ErrorMessage(ml.getAccount());
-		System.out.println(error);
+
 		request.setAttribute("account", ml.getAccount());
 //		request.setAttribute("password", ml.getPassword());
 		request.setAttribute("error", error);	
@@ -42,12 +42,13 @@ public class LoginController {
 	}
 
 	@GetMapping("/loginPage")
-	public String Login() {
+	public String login() {
 		return "login";
 	}
+	
 	@GetMapping("/welcome")
 	public String welcome(Model model) {	
-		model.addAttribute("command",session.getAttribute("memberLogin"));
+		model.addAttribute("command",session.getAttribute("memberLogin"));		
 		return "welcome";
 	}
 	
@@ -62,14 +63,14 @@ public class LoginController {
 		return "index";
 	}
 	
-	@GetMapping("/AjaxPage")
-	public String AjaxPage() {
+	@GetMapping("/loginAjaxPage")
+	public String loginAjaxPage() {
 		return "loginAjax";
 	}
 	
 	@PostMapping("/loginAjax")
 	@ResponseBody
-	public Map<String, Object> LoginAjax(@ModelAttribute MemberLogin ml,Model model ) {
+	public Map<String, Object> loginAjax(@ModelAttribute MemberLogin ml,Model model ) {
 		Map<String, Object> response=new HashMap<>();		
 		MemberLogin memberLogin=user.VerificationUser(ml.getAccount(), ml.getPassword());
 		String error=null;
