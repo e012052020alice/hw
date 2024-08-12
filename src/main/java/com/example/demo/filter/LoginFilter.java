@@ -21,10 +21,12 @@ public class LoginFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
-		String requestUrl=request.getRequestURI();
+//		String requestUrl=request.getRequestURI();
+		String requestUrl=request.getServletPath();
+		String contextPath=request.getContextPath();
 		System.out.println(requestUrl);
 		if(requestUrl.contains(".css")||requestUrl.contains(".js")||
-				"/demo/".equals(requestUrl)){
+				"/".equals(requestUrl)){
 			filterChain.doFilter(request, response);
 			return;
 		}			
@@ -32,22 +34,22 @@ public class LoginFilter extends OncePerRequestFilter {
 		System.out.println("filter");
 		Boolean isLogin=(Boolean) session.getAttribute("isLogin");
 		if (isLogin != null && isLogin) {		
-			if("/demo/loginPage".equals(requestUrl)) {	
-				response.sendRedirect("/demo/welcome");
+			if("/loginPage".equals(requestUrl)) {	
+				response.sendRedirect(contextPath+"/welcome");
 			}
-			else if("/demo/loginAjaxPage".equals(requestUrl)) {	
-				response.sendRedirect("/demo/welcomeAjax");
+			else if("/loginAjaxPage".equals(requestUrl)) {	
+				response.sendRedirect(contextPath+"/welcomeAjax");
 			}
 			filterChain.doFilter(request, response);					
 		} 
 		//未登入
 		else {
-			if(requestUrl.equals("/demo/login")) {
+			if(requestUrl.equals("/login")) {
 				String account = request.getParameter("account");
 	            String password = request.getParameter("password");
 				request.setAttribute("accountData",user.login(account,password, request));
 			}
-			if(requestUrl.equals("/demo/loginAjax")) {
+			if(requestUrl.equals("/loginAjax")) {
 				String account = request.getParameter("account");
 	            String password = request.getParameter("password");
 				request.setAttribute("accountData",user.loginAjax(account,password,request));
@@ -56,7 +58,7 @@ public class LoginFilter extends OncePerRequestFilter {
 				filterChain.doFilter(request, response);
 			}
 			else {
-				response.sendRedirect("/demo/loginPage");
+				response.sendRedirect(contextPath+"/loginPage");
 			}				
 		}
 	}
