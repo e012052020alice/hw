@@ -8,14 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.model.MemberLogin;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-//	@Resource
-//	private HttpServletRequest request;
 
 	@PostMapping("/login")
 	public String login(@ModelAttribute MemberLogin ml, Model model, HttpServletRequest request) {
@@ -40,7 +37,6 @@ public class LoginController {
 	}
 	@GetMapping("/signOut")
 	public String signOut(HttpSession session) {
-//		session.setAttribute("isverify", false);
 		session.invalidate();
 		return "index";
 	}

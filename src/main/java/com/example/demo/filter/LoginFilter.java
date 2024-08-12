@@ -21,8 +21,9 @@ public class LoginFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
-		String requestUrl=request.getRequestURI().split(";")[0];
-		if(requestUrl.contains("css")||requestUrl.contains("js")||
+		String requestUrl=request.getRequestURI();
+		System.out.println(requestUrl);
+		if(requestUrl.contains(".css")||requestUrl.contains(".js")||
 				"/demo/".equals(requestUrl)){
 			filterChain.doFilter(request, response);
 			return;
@@ -31,7 +32,6 @@ public class LoginFilter extends OncePerRequestFilter {
 		System.out.println("filter");
 		Boolean isLogin=(Boolean) session.getAttribute("isLogin");
 		if (isLogin != null && isLogin) {		
-//			Boolean isVerify=(Boolean)request.getSession().getAttribute("isverify");
 			if("/demo/loginPage".equals(requestUrl)) {	
 				response.sendRedirect("/demo/welcome");
 			}

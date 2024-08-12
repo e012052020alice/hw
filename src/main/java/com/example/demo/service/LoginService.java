@@ -13,14 +13,11 @@ public class LoginService {
 
 	@Autowired
 	private VerifyService user;
-//	@Resource
-//	private HttpServletRequest request;
 	
 	public String login(String account,String password, HttpServletRequest request) {
-		MemberLogin memberLogin=user.verificationUser(account, password);		
+		MemberLogin memberLogin=user.verificationUser(account, password,request.getSession());		
 		String error=null;
 		if(memberLogin!=null) {
-//			model.addAttribute("command", memberLogin);
 			request.getSession().setAttribute("Data", memberLogin);			
 			return "welcome";
 		}
@@ -33,7 +30,7 @@ public class LoginService {
 	@ResponseBody
 	public Map<String, Object> loginAjax(String account,String password,HttpServletRequest request ) {
 		Map<String, Object> response=new HashMap<>();		
-		MemberLogin memberLogin=user.verificationUser(account, password);
+		MemberLogin memberLogin=user.verificationUser(account, password,request.getSession());
 		String error=null;
 		if(memberLogin!=null) {
 			request.getSession().setAttribute("Data", memberLogin);
